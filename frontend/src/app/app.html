@@ -1,0 +1,9 @@
+<app-nav-bar (create)="composerOpen.set(true)" />
+
+<div class="shell">
+  <router-outlet />
+</div>
+
+@if (composerOpen()) {
+  <app-create-post-dialog (closed)="composerOpen.set(false)" (created)="onCreated()" />
+}

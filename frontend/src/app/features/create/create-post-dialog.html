@@ -1,0 +1,68 @@
+<div class="backdrop" (click)="closed.emit()">
+  <div class="panel" (click)="$event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="create-title">
+    <header class="panel-head">
+      <h2 id="create-title">Create new post</h2>
+      <button type="button" class="icon-btn" (click)="closed.emit()" aria-label="Close">
+        <app-icon name="close" [size]="22" />
+      </button>
+    </header>
+
+    <div class="panel-body">
+      <div class="preview">
+        @if (imageUrl()) {
+          <img appFallbackImage [src]="imageUrl()" alt="Preview of the post image" />
+        } @else {
+          <span class="muted">Paste an image URL to preview it.</span>
+        }
+      </div>
+
+      <form class="fields" (ngSubmit)="submit()">
+        <label>
+          <span>Image URL</span>
+          <input
+            type="url"
+            [ngModel]="imageUrl()"
+            (ngModelChange)="imageUrl.set($event)"
+            name="imageUrl"
+            placeholder="https://…"
+            required
+          />
+        </label>
+
+        <button type="button" class="btn-link surprise" (click)="randomImage()">
+          Surprise me with a random photo
+        </button>
+
+        <label>
+          <span>Caption</span>
+          <textarea
+            [ngModel]="caption()"
+            (ngModelChange)="caption.set($event)"
+            name="caption"
+            rows="3"
+            placeholder="Write a caption…"
+          ></textarea>
+        </label>
+
+        <label>
+          <span>Location</span>
+          <input
+            type="text"
+            [ngModel]="location()"
+            (ngModelChange)="location.set($event)"
+            name="location"
+            placeholder="Add a location"
+          />
+        </label>
+
+        @if (error()) {
+          <p class="error" role="alert">{{ error() }}</p>
+        }
+
+        <button type="submit" class="btn btn-primary" [disabled]="!imageUrl().trim() || submitting()">
+          {{ submitting() ? 'Sharing…' : 'Share' }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

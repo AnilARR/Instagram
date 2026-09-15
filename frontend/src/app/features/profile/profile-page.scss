@@ -1,0 +1,162 @@
+:host {
+  display: block;
+  max-width: 935px;
+  margin: 0 auto;
+}
+
+.head {
+  display: flex;
+  gap: 32px;
+  padding: 10px 0 40px;
+  align-items: center;
+}
+
+.avatar.big {
+  width: 150px;
+  height: 150px;
+}
+
+.head-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.head-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ring {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.line {
+  height: 18px;
+  width: 60%;
+}
+
+.line.short {
+  width: 35%;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.handle {
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stats {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}
+
+.bio {
+  line-height: 1.5;
+}
+
+.full-name {
+  font-weight: 600;
+}
+
+.bio-text {
+  margin: 0;
+  white-space: pre-line;
+}
+
+.link {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  border-top: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-top: 1px solid transparent;
+  margin-top: -1px;
+
+  &.active {
+    color: var(--text);
+    border-top-color: var(--text);
+  }
+}
+
+.notice {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+
+  p {
+    margin: 4px 0;
+  }
+}
+
+.empty-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Stack the header and shrink the avatar on phones. */
+@media (max-width: 735px) {
+  .head {
+    gap: 20px;
+    align-items: flex-start;
+    padding-bottom: 24px;
+  }
+
+  .avatar.big,
+  .ring {
+    width: 88px;
+    height: 88px;
+  }
+
+  .head-body {
+    gap: 14px;
+  }
+
+  .stats {
+    gap: 24px;
+    font-size: 14px;
+  }
+
+  .tabs {
+    gap: 30px;
+  }
+}

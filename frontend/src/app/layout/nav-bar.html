@@ -1,0 +1,73 @@
+<!-- Desktop rail -->
+<nav class="rail" aria-label="Main">
+  <a class="brand" routerLink="/">Instagram<span class="brand-sub">dummy</span></a>
+
+  <ul class="links">
+    <li>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <app-icon name="home" />
+        <span>Home</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/explore" routerLinkActive="active">
+        <app-icon name="explore" />
+        <span>Explore</span>
+      </a>
+    </li>
+    <li>
+      <button type="button" (click)="create.emit()">
+        <app-icon name="create" />
+        <span>Create</span>
+      </button>
+    </li>
+    @if (currentUser(); as me) {
+      <li>
+        <a [routerLink]="['/u', me.username]" routerLinkActive="active">
+          <img
+            class="avatar nav-avatar"
+            appFallbackImage
+            [src]="me.avatarUrl"
+            [alt]="me.username"
+            width="24"
+            height="24"
+          />
+          <span>Profile</span>
+        </a>
+      </li>
+    }
+  </ul>
+</nav>
+
+<!-- Mobile top bar -->
+<header class="topbar">
+  <a class="brand" routerLink="/">Instagram<span class="brand-sub">dummy</span></a>
+  <button type="button" class="icon-btn" (click)="create.emit()" aria-label="Create post">
+    <app-icon name="create" [size]="24" />
+  </button>
+</header>
+
+<!-- Mobile bottom tabs -->
+<nav class="tabbar" aria-label="Main">
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" aria-label="Home">
+    <app-icon name="home" />
+  </a>
+  <a routerLink="/explore" routerLinkActive="active" aria-label="Explore">
+    <app-icon name="explore" />
+  </a>
+  <button type="button" (click)="create.emit()" aria-label="Create post">
+    <app-icon name="create" />
+  </button>
+  @if (currentUser(); as me) {
+    <a [routerLink]="['/u', me.username]" routerLinkActive="active" aria-label="Profile">
+      <img
+        class="avatar"
+        appFallbackImage
+        [src]="me.avatarUrl"
+        [alt]="me.username"
+        width="24"
+        height="24"
+      />
+    </a>
+  }
+</nav>

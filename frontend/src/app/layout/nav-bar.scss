@@ -1,0 +1,125 @@
+/* Breakpoint where the left rail gives way to top + bottom bars. */
+$mobile: 940px;
+
+.brand {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.brand-sub {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+.rail {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: var(--nav-width);
+  padding: 32px 12px 20px;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .brand {
+    padding: 0 12px;
+  }
+}
+
+.links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  a,
+  button {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: none;
+    border-radius: var(--radius);
+    font-size: 16px;
+    text-align: left;
+
+    &:hover {
+      background: var(--hover);
+    }
+
+    &.active {
+      font-weight: 700;
+    }
+  }
+}
+
+.nav-avatar {
+  width: 24px;
+  height: 24px;
+}
+
+.topbar,
+.tabbar {
+  display: none;
+}
+
+@media (max-width: $mobile) {
+  .rail {
+    display: none;
+  }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tabbar {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px 0;
+    /* Keep clear of the phone's home indicator. */
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+
+    a,
+    button {
+      background: none;
+      border: none;
+      padding: 4px 12px;
+      display: inline-flex;
+
+      &.active {
+        color: var(--text);
+      }
+    }
+
+    .avatar {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}

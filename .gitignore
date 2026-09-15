@@ -1,0 +1,35 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+artifacts/
+TestResults/
+[Dd]ebug/
+[Rr]elease/
+project.lock.json
+project.assets.json
+*.nuget.props
+*.nuget.targets
+
+## Node / Angular
+node_modules/
+dist/
+.angular/
+npm-debug.log*
+yarn-error.log*
+*.tsbuildinfo
+
+## Editors
+.idea/
+*.swp
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Local overrides
+appsettings.Local.json
+.env
+.env.local

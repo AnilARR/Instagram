@@ -1,0 +1,42 @@
+@if (currentUser(); as me) {
+  <a class="me" [routerLink]="['/u', me.username]">
+    <img class="avatar" appFallbackImage [src]="me.avatarUrl" [alt]="" width="56" height="56" />
+    <span class="me-text">
+      <span class="username">{{ me.username }}</span>
+      <span class="muted">{{ me.fullName }}</span>
+    </span>
+  </a>
+}
+
+@if (people().length) {
+  <section class="block">
+    <h2 class="muted heading">Suggested for you</h2>
+
+    <ul>
+      @for (person of people(); track person.id) {
+        <li>
+          <a [routerLink]="['/u', person.username]">
+            <img class="avatar" appFallbackImage [src]="person.avatarUrl" [alt]="" width="32" height="32" />
+          </a>
+          <span class="who">
+            <span class="line">
+              <a class="username" [routerLink]="['/u', person.username]">{{ person.username }}</a>
+              @if (person.isVerified) {
+                <app-icon class="verified" name="verified" [size]="12" />
+              }
+            </span>
+            <span class="muted sub">{{ person.fullName }}</span>
+          </span>
+          <button type="button" class="btn-link" (click)="follow(person)">
+            {{ followed().has(person.username) ? 'Following' : 'Follow' }}
+          </button>
+        </li>
+      }
+    </ul>
+  </section>
+}
+
+<p class="muted footer">
+  Instagram Dummy · ASP.NET&nbsp;Core + Angular<br />
+  Seed data only. Nothing here is real.
+</p>

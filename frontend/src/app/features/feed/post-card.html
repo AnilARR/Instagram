@@ -1,0 +1,129 @@
+<article class="card">
+  <header class="head">
+    <a [routerLink]="['/u', post().author.username]" class="story-ring is-seen">
+      <img
+        class="avatar"
+        appFallbackImage
+        [src]="post().author.avatarUrl"
+        [alt]="post().author.username"
+        width="32"
+        height="32"
+      />
+    </a>
+
+    <div class="head-text">
+      <div class="head-line">
+        <a class="username" [routerLink]="['/u', post().author.username]">
+          {{ post().author.username }}
+        </a>
+        @if (post().author.isVerified) {
+          <app-icon class="verified" name="verified" [size]="14" />
+          <span class="sr-only">Verified</span>
+        }
+        <span class="muted">·</span>
+        <time class="muted" [attr.datetime]="post().createdAt">
+          {{ post().createdAt | timeAgo }}
+        </time>
+      </div>
+      @if (post().location) {
+        <div class="muted location">{{ post().location }}</div>
+      }
+    </div>
+
+    <button type="button" class="icon-btn" aria-label="More options">
+      <app-icon name="more" [size]="20" />
+    </button>
+  </header>
+
+  <!-- Double-click to like, the way the real app does. -->
+  <div class="media" (dblclick)="likeFromImage()">
+    <img
+      appFallbackImage
+      [src]="post().imageUrl"
+      [alt]="post().caption || 'Post by ' + post().author.username"
+      loading="lazy"
+      width="470"
+      height="470"
+    />
+  </div>
+
+  <div class="actions">
+    <button
+      type="button"
+      class="icon-btn"
+      [class.liked]="liked()"
+      (click)="toggleLike()"
+      [attr.aria-pressed]="liked()"
+      [attr.aria-label]="liked() ? 'Unlike' : 'Like'"
+    >
+      <app-icon [name]="liked() ? 'heart-filled' : 'heart'" [size]="24" />
+    </button>
+
+    <button type="button" class="icon-btn" (click)="commentInput.focus()" aria-label="Comment">
+      <app-icon name="comment" [size]="24" />
+    </button>
+
+    <button type="button" class="icon-btn" aria-label="Share">
+      <app-icon name="share" [size]="24" />
+    </button>
+
+    <button
+      type="button"
+      class="icon-btn push-right"
+      (click)="toggleSaved()"
+      [attr.aria-pressed]="saved()"
+      [attr.aria-label]="saved() ? 'Remove from saved' : 'Save'"
+    >
+      <app-icon [name]="saved() ? 'bookmark-filled' : 'bookmark'" [size]="24" />
+    </button>
+  </div>
+
+  <div class="body">
+    <div class="likes">{{ likeCount() | compactCount }} {{ likeCount() === 1 ? 'like' : 'likes' }}</div>
+
+    @if (post().caption) {
+      <p class="caption" [class.clamped]="captionIsLong() && !captionExpanded()">
+        <a class="username" [routerLink]="['/u', post().author.username]">
+          {{ post().author.username }}
+        </a>
+        {{ post().caption }}
+      </p>
+      @if (captionIsLong() && !captionExpanded()) {
+        <button type="button" class="more-link muted" (click)="captionExpanded.set(true)">more</button>
+      }
+    }
+
+    @if (hasHiddenComments()) {
+      <button type="button" class="more-link muted" (click)="expandComments()">
+        View all {{ commentCount() }} comments
+      </button>
+    }
+
+    <ul class="comments">
+      @for (comment of comments(); track comment.id) {
+        <li>
+          <a class="username" [routerLink]="['/u', comment.author.username]">
+            {{ comment.author.username }}
+          </a>
+          {{ comment.text }}
+        </li>
+      }
+    </ul>
+  </div>
+
+  <form class="composer" (ngSubmit)="submitComment()">
+    <label class="sr-only" [attr.for]="'comment-' + post().id">Add a comment</label>
+    <input
+      #commentInput
+      [id]="'comment-' + post().id"
+      type="text"
+      placeholder="Add a comment…"
+      [ngModel]="draft()"
+      (ngModelChange)="draft.set($event)"
+      name="comment"
+      autocomplete="off"
+      [disabled]="submitting()"
+    />
+    <button type="submit" class="btn-link" [disabled]="!draft().trim() || submitting()">Post</button>
+  </form>
+</article>

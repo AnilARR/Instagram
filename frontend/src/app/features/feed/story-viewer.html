@@ -1,0 +1,40 @@
+@if (current(); as story) {
+  <div class="backdrop" (click)="closed.emit()">
+    <!-- Clicks inside the frame drive navigation instead of closing. -->
+    <div class="frame" (click)="$event.stopPropagation()" role="dialog" aria-modal="true" aria-label="Story">
+      <div class="bars">
+        @for (s of stories(); track s.id; let i = $index) {
+          <span class="bar" [class.done]="i < index()" [class.active]="i === index()"></span>
+        }
+      </div>
+
+      <header class="frame-head">
+        <img
+          class="avatar"
+          appFallbackImage
+          [src]="story.author.avatarUrl"
+          [alt]=""
+          width="32"
+          height="32"
+        />
+        <span class="username">{{ story.author.username }}</span>
+        <time class="muted">{{ story.createdAt | timeAgo }}</time>
+        <button type="button" class="icon-btn close" (click)="closed.emit()" aria-label="Close">
+          <app-icon name="close" [size]="22" />
+        </button>
+      </header>
+
+      <img class="shot" appFallbackImage [src]="story.imageUrl" [alt]="'Story by ' + story.author.username" />
+
+      <button type="button" class="tap tap-left" (click)="previous()" aria-label="Previous story"></button>
+      <button type="button" class="tap tap-right" (click)="next()" aria-label="Next story"></button>
+    </div>
+
+    <button type="button" class="nav nav-prev" (click)="$event.stopPropagation(); previous()" aria-label="Previous">
+      <app-icon name="chevron-left" [size]="28" />
+    </button>
+    <button type="button" class="nav nav-next" (click)="$event.stopPropagation(); next()" aria-label="Next">
+      <app-icon name="chevron-right" [size]="28" />
+    </button>
+  </div>
+}

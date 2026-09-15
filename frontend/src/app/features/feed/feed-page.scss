@@ -1,0 +1,86 @@
+.layout {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.column {
+  width: 100%;
+  max-width: var(--feed-width);
+  flex: none;
+}
+
+.aside {
+  width: var(--aside-width);
+  flex: none;
+  position: sticky;
+  top: 20px;
+}
+
+/* The suggestions rail is the first thing to go when space runs out. */
+@media (max-width: 1150px) {
+  .aside {
+    display: none;
+  }
+}
+
+.card-skeleton {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 12px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .line-head {
+    height: 32px;
+    width: 55%;
+  }
+
+  .block {
+    aspect-ratio: 1;
+    width: 100%;
+  }
+
+  .line {
+    height: 12px;
+    width: 80%;
+  }
+
+  .line.short {
+    width: 45%;
+  }
+}
+
+.notice {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 32px 24px;
+  text-align: center;
+
+  p {
+    margin: 0 0 8px;
+  }
+
+  code {
+    font-size: 12px;
+  }
+
+  .btn {
+    margin-top: 12px;
+  }
+}
+
+.load-more {
+  display: block;
+  margin: 0 auto 32px;
+}
+
+.end {
+  text-align: center;
+  padding-bottom: 32px;
+}

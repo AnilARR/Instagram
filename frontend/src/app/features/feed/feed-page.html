@@ -1,0 +1,55 @@
+<div class="layout">
+  <main class="column">
+    <app-stories-bar [stories]="stories()" (open)="openStory($event)" />
+
+    @if (loading()) {
+      <!-- Two card-shaped placeholders while the first page lands. -->
+      @for (i of [1, 2]; track i) {
+        <div class="card-skeleton">
+          <div class="skeleton line-head"></div>
+          <div class="skeleton block"></div>
+          <div class="skeleton line"></div>
+          <div class="skeleton line short"></div>
+        </div>
+      }
+    } @else if (failed()) {
+      <div class="notice">
+        <p>Couldn't reach the API.</p>
+        <p class="muted">
+          Make sure the backend is running on <code>http://localhost:5065</code>.
+        </p>
+        <button type="button" class="btn btn-primary" (click)="retry()">Try again</button>
+      </div>
+    } @else if (!posts().length) {
+      <div class="notice">
+        <p>Your feed is empty.</p>
+        <p class="muted">Follow a few people and their posts will show up here.</p>
+      </div>
+    } @else {
+      @for (post of posts(); track post.id) {
+        <app-post-card [post]="post" />
+      }
+
+      @if (hasMore()) {
+        <button type="button" class="btn load-more" (click)="loadNextPage()" [disabled]="loadingMore()">
+          {{ loadingMore() ? 'Loading…' : 'Load more' }}
+        </button>
+      } @else {
+        <p class="muted end">You're all caught up.</p>
+      }
+    }
+  </main>
+
+  <aside class="aside">
+    <app-suggestions />
+  </aside>
+</div>
+
+@if (viewerIndex() !== null) {
+  <app-story-viewer
+    [stories]="stories()"
+    [startIndex]="viewerIndex()!"
+    (closed)="viewerIndex.set(null)"
+    (seen)="markSeen($event)"
+  />
+}

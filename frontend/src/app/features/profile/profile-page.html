@@ -1,0 +1,73 @@
+@if (loading()) {
+  <div class="head">
+    <div class="skeleton ring"></div>
+    <div class="head-lines">
+      <div class="skeleton line"></div>
+      <div class="skeleton line short"></div>
+    </div>
+  </div>
+} @else if (notFound()) {
+  <div class="notice">
+    <p>Sorry, this page isn't available.</p>
+    <p class="muted">The link may be broken, or the profile may have been removed.</p>
+  </div>
+} @else if (profile(); as user) {
+  <header class="head">
+    <img class="avatar big" appFallbackImage [src]="user.avatarUrl" [alt]="" width="150" height="150" />
+
+    <div class="head-body">
+      <div class="title-row">
+        <h1 class="handle">
+          {{ user.username }}
+          @if (user.isVerified) {
+            <app-icon class="verified" name="verified" [size]="18" />
+            <span class="sr-only">Verified</span>
+          }
+        </h1>
+
+        @if (user.isCurrentUser) {
+          <button type="button" class="btn">Edit profile</button>
+        } @else {
+          <button
+            type="button"
+            class="btn"
+            [class.btn-primary]="!user.isFollowedByCurrentUser"
+            (click)="toggleFollow()"
+          >
+            {{ user.isFollowedByCurrentUser ? 'Following' : 'Follow' }}
+          </button>
+        }
+      </div>
+
+      <ul class="stats">
+        <li><strong>{{ user.postCount | compactCount }}</strong> posts</li>
+        <li><strong>{{ user.followerCount | compactCount }}</strong> followers</li>
+        <li><strong>{{ user.followingCount | compactCount }}</strong> following</li>
+      </ul>
+
+      <div class="bio">
+        <div class="full-name">{{ user.fullName }}</div>
+        @if (user.bio) {
+          <p class="bio-text">{{ user.bio }}</p>
+        }
+        @if (user.website) {
+          <span class="link">{{ user.website }}</span>
+        }
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs" aria-label="Profile sections">
+    <span class="tab active"><app-icon name="grid" [size]="12" /> Posts</span>
+  </nav>
+
+  @if (posts().length) {
+    <app-post-grid [posts]="posts()" />
+  } @else {
+    <div class="notice">
+      <app-icon name="camera" [size]="44" />
+      <p class="empty-title">No posts yet</p>
+      <p class="muted">When {{ user.isCurrentUser ? 'you share' : 'they share' }} photos, they'll appear here.</p>
+    </div>
+  }
+}

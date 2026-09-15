@@ -1,0 +1,31 @@
+<div class="wrap">
+  <label class="search">
+    <app-icon name="search" [size]="18" />
+    <input
+      type="search"
+      placeholder="Search posts, people and places"
+      [ngModel]="query()"
+      (ngModelChange)="query.set($event)"
+      name="q"
+      aria-label="Search posts"
+    />
+  </label>
+
+  @if (loading()) {
+    <div class="grid-skeleton">
+      @for (i of [1, 2, 3, 4, 5, 6, 7, 8, 9]; track i) {
+        <div class="skeleton cell"></div>
+      }
+    </div>
+  } @else if (filtered().length) {
+    <app-post-grid [posts]="filtered()" />
+  } @else {
+    <p class="muted empty">
+      @if (posts().length) {
+        No posts match "{{ query() }}".
+      } @else {
+        Nothing to explore yet.
+      }
+    </p>
+  }
+</div>

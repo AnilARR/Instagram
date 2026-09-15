@@ -1,0 +1,67 @@
+:host {
+  display: block;
+  padding-top: 14px;
+}
+
+.me {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.me-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.heading {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+
+.block ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.block li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.who {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.line {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sub {
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.footer {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-top: 28px;
+  line-height: 1.8;
+}

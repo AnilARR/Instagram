@@ -1,0 +1,14 @@
+.shell {
+  /* Clear the fixed left rail on desktop. */
+  margin-left: var(--nav-width);
+  padding: 30px 20px 40px;
+}
+
+@media (max-width: 940px) {
+  .shell {
+    margin-left: 0;
+    padding: 16px 12px 40px;
+    /* Clear the fixed bottom tab bar. */
+    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+  }
+}
